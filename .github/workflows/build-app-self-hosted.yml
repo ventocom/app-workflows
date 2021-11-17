@@ -1,0 +1,65 @@
+name: Build app
+
+on:
+  workflow_call:
+    inputs:
+      platform:
+        required: true
+        type: string
+        description: 'Which platform to use to call fastlane lanes (ios/android)'
+      lane:
+        required: true
+        type: string
+        description: 'Which fastlane lane to run'
+    secrets:
+      BUILD_BOT_SSH_KEY:
+        required: true
+      APP_CENTER_API_TOKEN:
+        required: false
+      MS_TEAMS_WEBHOOK_URL:
+        required: false
+      
+jobs:
+  prepare_and_build_environment:
+    name: Build app
+    runs-on: m1
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+        with:
+          submodules: 'recursive'
+          ssh-key: ${{ secrets.BUILD_BOT_SSH_KEY }}
+          ssh-strict: 'accept-new'
+
+      - name: Cache ruby gems
+        uses: actions/cache@v2
+        with:
+          path: vendor/bundle
+          key: ${{ runner.os }}-gems-${{ hashFiles('**/Gemfile.lock') }}-v1
+
+      - name: Install ruby gems
+        run: |
+          arch -arm64 bundle config path vendor/bundle
+          arch -arm64 bundle install --jobs 4 --retry 3 --quiet
+
+      - name: Configure private npm registry
+        uses: actions/setup-node@v2
+        with:
+          always-auth: true
+          node-version: '14.x'
+          registry-url: https://npm.pkg.github.com
+          scope: '@ventocom'
+
+      - name: Install node modules
+        env:
+          CORDOVA_CLI_VERSION: '10.0.0'
+          IONIC_CLI_VERSION: '6.16.3'
+        run: |
+          arch -arm64 npm ci -q
+          arch -arm64 npm i -g -q cordova@${CORDOVA_CLI_VERSION} @ionic/cli@${IONIC_CLI_VERSION}
+
+      - name: Run fastlane app_center_release_all
+        env:
+          APP_CENTER_API_TOKEN: ${{ secrets.APP_CENTER_API_TOKEN }}
+          MS_TEAMS_WEBHOOK_URL: ${{ secrets.MS_TEAMS_WEBHOOK_URL }}
+        run: arch -arm64 bundle exec fastlane ${{ inputs.platform }} ${{ inputs.lane }}
