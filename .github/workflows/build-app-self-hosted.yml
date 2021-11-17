@@ -7,6 +7,10 @@ on:
         required: true
         type: string
         description: 'Which platform to use to call fastlane lanes (ios/android)'
+      type:
+        required: true
+        type: string
+        description: 'Release type, either test or release'
       lane:
         required: true
         type: string
@@ -25,6 +29,18 @@ on:
       APP_CENTER_API_TOKEN:
         required: false
       MS_TEAMS_WEBHOOK_URL:
+        required: false
+      APP_STORE_CONNECT_API_KEY_KEY:
+        required: false
+      MATCH_PASSWORD:
+        required: false
+      HUAWEI_APP_GALLERY_API_KEY:
+        required: false
+      ANDROID_KEYSTORE_PASSWORD:
+        required: false
+      SENTRY_AUTH_TOKEN:
+        required: false
+      PLAY_CONSOLE_ACCESS_JSON:
         required: false
       
 jobs:
@@ -66,8 +82,21 @@ jobs:
           arch -arm64 npm ci -q
           arch -arm64 npm i -g -q cordova@${CORDOVA_CLI_VERSION} @ionic/cli@${IONIC_CLI_VERSION}
 
+      - name: Setup play store authentication
+        env:
+          PLAY_CONSOLE_ACCESS_JSON: ${{ secrets.PLAY_CONSOLE_ACCESS_JSON }}
+        if: ${{ inputs.platform == 'android' && inputs.type == 'release' }}
+        run: |
+          arch -arm64 echo "$PLAY_CONSOLE_ACCESS_JSON" > play-console-access.json.b64
+          arch -arm64 base64 -d -i play-console-access.json.b64 > play-console-access.json
+
       - name: Run fastlane
         env:
           APP_CENTER_API_TOKEN: ${{ secrets.APP_CENTER_API_TOKEN }}
           MS_TEAMS_WEBHOOK_URL: ${{ secrets.MS_TEAMS_WEBHOOK_URL }}
+          APP_STORE_CONNECT_API_KEY_KEY: ${{ secrets.APP_STORE_CONNECT_API_KEY_KEY }}
+          MATCH_PASSWORD: ${{ secrets.MATCH_PASSWORD }}
+          HUAWEI_APP_GALLERY_API_KEY: ${{ secrets.HUAWEI_APP_GALLERY_API_KEY }}
+          ANDROID_KEYSTORE_PASSWORD: ${{ secrets.ANDROID_KEYSTORE_PASSWORD }}
+          SENTRY_AUTH_TOKEN: ${{ secrets.SENTRY_AUTH_TOKEN }}
         run: arch -arm64 bundle exec fastlane ${{ inputs.platform }} ${{ inputs.lane }}
