@@ -69,8 +69,8 @@ jobs:
     needs: map_inputs
     strategy:
       matrix:
-        platform: ${{ needs.map_inputs.outputs.platforms }}
-        type: ${{ needs.map_inputs.outputs.types }}
+        platform: ${{ fromJSON(needs.map_inputs.outputs.platforms) }}
+        type: ${{ fromJSON(needs.map_inputs.outputs.types) }}
     runs-on: ${{ inputs.runs-on }}
     steps:
       - name: Checkout repository
