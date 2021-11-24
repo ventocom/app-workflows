@@ -50,6 +50,7 @@ on:
 jobs:
   map_inputs:
     name: Map inputs
+    runs-on: ${{ inputs.runs-on }}
     steps:
       - uses: ventocom/app-workflows/.github/actions/map-inputs@main
         id: map-inputs
