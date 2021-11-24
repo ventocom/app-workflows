@@ -51,8 +51,9 @@ jobs:
   map_inputs:
     runs-on: ${{ inputs.runs-on }}
     steps:
-      - uses: ventocom/app-workflows/.github/actions/map-inputs@main
+      - name: Map inputs
         id: map-inputs
+        uses: ventocom/app-workflows/.github/actions/map-inputs@main
         with:
           android: ${{ inputs.android }}
           ios: ${{ inputs.ios }}
