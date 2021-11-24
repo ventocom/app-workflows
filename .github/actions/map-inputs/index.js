@@ -3,10 +3,10 @@ const core = require('@actions/core');
 const github = require('@actions/github');
 
 try {
-  const buildAndroid = core.getInput('android');
-  const buildIos = core.getInput('ios');
-  const distributeTest = core.getInput('test');
-  const publishRelease = core.getInput('release');
+  const buildAndroid = core.getInput('android') === 'true';
+  const buildIos = core.getInput('ios') === 'true';
+  const distributeTest = core.getInput('test') === 'true';
+  const publishRelease = core.getInput('release') === 'true';
 
   console.log({ buildAndroid, buildIos, distributeTest, publishRelease });
 
