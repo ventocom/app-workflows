@@ -51,13 +51,13 @@ jobs:
   map_inputs:
     name: Map inputs
     steps:
-      id: map-inputs
-      uses: ventocom/app-workflows/.github/actions/map-inputs@main
-      with:
-        android: ${{ inputs.android }}
-        ios: ${{ inputs.ios }}
-        test: ${{ inputs.test }}
-        release: ${{ inputs.release }}
+      - uses: ventocom/app-workflows/.github/actions/map-inputs@main
+        id: map-inputs
+        with:
+          android: ${{ inputs.android }}
+          ios: ${{ inputs.ios }}
+          test: ${{ inputs.test }}
+          release: ${{ inputs.release }}
     # Map step output to job output
     outputs:
       platforms: ${{ steps.map-inputs.outputs.platforms }}
