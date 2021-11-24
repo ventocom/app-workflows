@@ -16,7 +16,7 @@ on:
         type: boolean
         description: 'If a test build should be distributed'
       release:
-        requried: false
+        required: false
         type: boolean
         description: 'If a production release should be published'
       runs-on:
