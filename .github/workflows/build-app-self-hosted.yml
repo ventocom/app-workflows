@@ -3,18 +3,22 @@ name: Build app
 on:
   workflow_call:
     inputs:
-      platform:
-        required: true
-        type: string
-        description: 'Which platform to use to call fastlane lanes (ios/android)'
-      type:
-        required: true
-        type: string
-        description: 'Release type, either test or release'
-      lane:
-        required: true
-        type: string
-        description: 'Which fastlane lane to run'
+      android:
+        required: false
+        type: boolean
+        description: 'If the android platform should be built'
+      ios:
+        required: false
+        type: boolean
+        description: 'If the iOS platform should be built'
+      test:
+        required: false
+        type: boolean
+        description: 'If a test build should be distributed'
+      release:
+        requried: false
+        type: boolean
+        description: 'If a production release should be published'
       runs-on:
         required: true
         type: string
@@ -29,7 +33,7 @@ on:
       APP_CENTER_API_TOKEN:
         required: false
       MS_TEAMS_WEBHOOK_URL:
-        required: false
+        required: true
       APP_STORE_CONNECT_API_KEY_KEY:
         required: false
       MATCH_PASSWORD:
@@ -44,8 +48,28 @@ on:
         required: false
       
 jobs:
+  map_inputs:
+    name: Map inputs
+    steps:
+      id: map-inputs
+      uses: ventocom/app-workflows/.github/actions/map-inputs@main
+      with:
+        android: ${{ inputs.android }}
+        ios: ${{ inputs.ios }}
+        test: ${{ inputs.test }}
+        release: ${{ inputs.release }}
+    # Map step output to job output
+    outputs:
+      platforms: ${{ steps.map-inputs.outputs.platforms }}
+      types: ${{ steps.map-inputs.outputs.types }}
+
   prepare_and_build_environment:
     name: Build app
+    needs: map_inputs
+    strategy:
+      matrix:
+        platform: ${{ needs.map_inputs.outputs.platforms }}
+        type: ${{ needs.map_inputs.outputs.types }}
     runs-on: ${{ inputs.runs-on }}
     steps:
       - name: Checkout repository
@@ -85,7 +109,7 @@ jobs:
       - name: Setup play store authentication
         env:
           PLAY_CONSOLE_ACCESS_JSON: ${{ secrets.PLAY_CONSOLE_ACCESS_JSON }}
-        if: ${{ inputs.platform == 'android' && inputs.type == 'release' }}
+        if: ${{ matrix.platform == 'android' && matrix.type.type == 'release' }}
         run: |
           arch -arm64 echo "$PLAY_CONSOLE_ACCESS_JSON" > play-console-access.json.b64
           arch -arm64 base64 -d -i play-console-access.json.b64 > play-console-access.json
@@ -99,4 +123,4 @@ jobs:
           HUAWEI_APP_GALLERY_API_KEY: ${{ secrets.HUAWEI_APP_GALLERY_API_KEY }}
           ANDROID_KEYSTORE_PASSWORD: ${{ secrets.ANDROID_KEYSTORE_PASSWORD }}
           SENTRY_AUTH_TOKEN: ${{ secrets.SENTRY_AUTH_TOKEN }}
-        run: arch -arm64 bundle exec fastlane ${{ inputs.platform }} ${{ inputs.lane }}
+        run: arch -arm64 bundle exec fastlane ${{ matrix.platform }} ${{ matrix.type.lane }}

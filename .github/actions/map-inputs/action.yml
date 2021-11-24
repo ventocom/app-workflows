@@ -1,0 +1,31 @@
+name: 'Map inputs'
+description: 'Maps workflow inputs to usable matrix arrays'
+inputs:
+  android:
+    required: false
+    type: boolean
+    default: false
+    description: 'If the android platform should be built'
+  ios:
+    required: false
+    type: boolean
+    default: false
+    description: 'If the iOS platform should be built'
+  test:
+    required: false
+    type: boolean
+    default: false
+    description: 'If a test build should be distributed'
+  release:
+    requried: false
+    type: boolean
+    default: false
+    description: 'If a production release should be published'
+outputs:
+  platforms:
+    description: 'Which platform to use to call fastlane lanes [ios, android]'
+  types:
+    description: 'Release type, [{ type: "test", lane: "app_center_release_all" }, { type: "release", lane: "store_release" }]'
+runs:
+  using: 'node12'
+  main: 'index.js'
