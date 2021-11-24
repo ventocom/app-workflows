@@ -7,18 +7,18 @@ on:
         required: false
         type: boolean
         description: 'If the android platform should be built'
-      ios:
-        required: false
-        type: boolean
-        description: 'If the iOS platform should be built'
-      test:
-        required: false
-        type: boolean
-        description: 'If a test build should be distributed'
-      release:
-        required: false
-        type: boolean
-        description: 'If a production release should be published'
+      # ios:
+      #   required: false
+      #   type: boolean
+      #   description: 'If the iOS platform should be built'
+      # test:
+      #   required: false
+      #   type: boolean
+      #   description: 'If a test build should be distributed'
+      # release:
+      #   required: false
+      #   type: boolean
+      #   description: 'If a production release should be published'
       runs-on:
         required: true
         type: string
@@ -49,11 +49,11 @@ on:
       
 jobs:
   test:
-    runs-on: 'm1'
+    runs-on: ${{ inputs.runs-on }}
     steps:
       - name: Test
         run: |
-          echo "Test"
+          echo ${{ inputs.android }}
 
   # map_inputs:
   #   runs-on: ${{ inputs.runs-on }}
