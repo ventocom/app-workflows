@@ -49,23 +49,24 @@ on:
       
 jobs:
   map_inputs:
+    name: Map workflow inputs
     runs-on: ${{ inputs.runs-on }}
     steps:
       - name: Map inputs
         id: map-inputs
         uses: ventocom/app-workflows/.github/actions/map-inputs@main
         with:
-          android: ${{ inputs.android }}
-          ios: ${{ inputs.ios }}
-          test: ${{ inputs.test }}
-          release: ${{ inputs.release }}
+          android: ${{ fromJSON(inputs.android) }}
+          ios: ${{ fromJSON(inputs.ios) }}
+          test: ${{ fromJSON(inputs.test) }}
+          release: ${{ fromJSON(inputs.release) }}
     # Map step output to job output
     outputs:
       platforms: ${{ steps.map-inputs.outputs.platforms }}
       types: ${{ steps.map-inputs.outputs.types }}
 
   prepare_and_build_environment:
-    name: Build ${{ matrix.platform }} ${{ matrix.type.type }} app
+    name: ${{ matrix.platform }} ${{ matrix.type.type }} app
     needs: map_inputs
     strategy:
       matrix:

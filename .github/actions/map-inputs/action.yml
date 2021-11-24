@@ -3,23 +3,23 @@ description: 'Maps workflow inputs to usable matrix arrays'
 inputs:
   android:
     required: false
-    type: string
-    default: 'false'
+    type: boolean
+    default: 'false
     description: 'If the android platform should be built'
   ios:
     required: false
-    type: string
-    default: 'false'
+    type: boolean
+    default: 'false
     description: 'If the iOS platform should be built'
   test:
     required: false
-    type: string
-    default: 'false'
+    type: boolean
+    default: 'false
     description: 'If a test build should be distributed'
   release:
     required: false
-    type: string
-    default: 'false'
+    type: boolean
+    default: 'false
     description: 'If a production release should be published'
 outputs:
   platforms:
