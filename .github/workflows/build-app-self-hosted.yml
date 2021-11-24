@@ -5,7 +5,7 @@ on:
     inputs:
       android:
         required: false
-        type: boolean
+        type: string
         description: 'If the android platform should be built'
       # ios:
       #   required: false
