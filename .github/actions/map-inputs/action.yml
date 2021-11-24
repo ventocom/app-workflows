@@ -4,22 +4,22 @@ inputs:
   android:
     required: false
     type: boolean
-    default: 'false
+    default: false
     description: 'If the android platform should be built'
   ios:
     required: false
     type: boolean
-    default: 'false
+    default: false
     description: 'If the iOS platform should be built'
   test:
     required: false
     type: boolean
-    default: 'false
+    default: false
     description: 'If a test build should be distributed'
   release:
     required: false
     type: boolean
-    default: 'false
+    default: false
     description: 'If a production release should be published'
 outputs:
   platforms:
