@@ -1,5 +1,6 @@
 //@ts-check
 const core = require('@actions/core');
+const github = require('@actions/github');
 
 try {
   const buildAndroid = core.getInput('android');
