@@ -48,8 +48,16 @@ on:
         required: false
       
 jobs:
+  test:
+    runs-on: ${{ inputs.runs-on }}
+    steps:
+      - name: Test
+        run: |
+          echo "Test"
+
   map_inputs:
     runs-on: ${{ inputs.runs-on }}
+    needs: test
     steps:
       - name: Map inputs
         id: map-inputs
