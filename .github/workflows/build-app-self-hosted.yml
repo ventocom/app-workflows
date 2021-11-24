@@ -49,7 +49,7 @@ on:
       
 jobs:
   test:
-    runs-on: ${{ inputs.runs-on }}
+    runs-on: 'm1'
     steps:
       - name: Test
         run: |
