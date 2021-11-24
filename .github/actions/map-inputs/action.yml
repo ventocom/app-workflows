@@ -17,7 +17,7 @@ inputs:
     default: false
     description: 'If a test build should be distributed'
   release:
-    requried: false
+    required: false
     type: boolean
     default: false
     description: 'If a production release should be published'
