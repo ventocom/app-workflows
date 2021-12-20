@@ -125,4 +125,6 @@ jobs:
           HUAWEI_APP_GALLERY_API_KEY: ${{ secrets.HUAWEI_APP_GALLERY_API_KEY }}
           ANDROID_KEYSTORE_PASSWORD: ${{ secrets.ANDROID_KEYSTORE_PASSWORD }}
           SENTRY_AUTH_TOKEN: ${{ secrets.SENTRY_AUTH_TOKEN }}
+          LANG: 'en_US.UTF-8'
+          LC_ALL: 'en_US.UTF-8'
         run: arch -arm64 bundle exec fastlane ${{ matrix.platform }} ${{ matrix.type.lane }}
