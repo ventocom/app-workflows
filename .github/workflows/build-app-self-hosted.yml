@@ -80,6 +80,7 @@ jobs:
           submodules: 'recursive'
           ssh-key: ${{ secrets.BUILD_BOT_SSH_KEY }}
           ssh-strict: 'accept-new'
+          lfs: true
 
       - name: Cache ruby gems
         uses: actions/cache@v2
