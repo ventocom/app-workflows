@@ -30,7 +30,7 @@ on:
       java-version:
         required: true
         type: string
-        descirption: 'Which java version should be used'
+        description: 'Which java version should be used'
     secrets:
       BUILD_BOT_SSH_KEY:
         required: true
