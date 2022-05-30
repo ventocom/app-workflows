@@ -132,11 +132,10 @@ jobs:
 
       - name: Install node modules
         env:
-          CORDOVA_CLI_VERSION: '11.0.0'
-          IONIC_CLI_VERSION: '6.16.3'
+          IONIC_CLI_VERSION: '6.19.1'
         run: |
           arch -arm64 npm ci -q
-          arch -arm64 npm i -g -q cordova@${CORDOVA_CLI_VERSION} @ionic/cli@${IONIC_CLI_VERSION}
+          arch -arm64 npm i -g -q @ionic/cli@${IONIC_CLI_VERSION}
 
       - name: Setup play store authentication
         env:
