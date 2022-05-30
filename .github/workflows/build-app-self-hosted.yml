@@ -91,7 +91,7 @@ jobs:
         run: |
           git lfs ls-files -l | cut -d' ' -f1 | sort > .lfs-assets-id
           git add .lfs-assets-id
-          git commit -m "update git lfs lockfile"
+          git commit -m "update git lfs lockfile" || true
           git push
 
       - name: Restore LFS cache
