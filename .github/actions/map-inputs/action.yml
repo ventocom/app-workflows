@@ -27,5 +27,5 @@ outputs:
   types:
     description: 'Release type, [{ type: "test", lane: "app_center_release_all" }, { type: "release", lane: "store_release" }]'
 runs:
-  using: 'node12'
+  using: 'node16'
   main: 'index.js'
