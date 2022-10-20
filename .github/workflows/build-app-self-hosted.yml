@@ -79,7 +79,7 @@ jobs:
     runs-on: ${{ inputs.runs-on }}
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
         with:
           submodules: 'recursive'
           ssh-key: ${{ secrets.BUILD_BOT_SSH_KEY }}
@@ -97,7 +97,7 @@ jobs:
           git push
 
       - name: Restore LFS cache
-        uses: actions/cache@v2
+        uses: actions/cache@v3
         id: lfs-cache
         with:
           path: .git/lfs
@@ -108,7 +108,7 @@ jobs:
         run: git lfs pull
 
       - name: Cache ruby gems
-        uses: actions/cache@v2
+        uses: actions/cache@v3
         with:
           path: vendor/bundle
           key: ${{ runner.os }}-gems-${{ hashFiles('**/Gemfile.lock') }}-v1
@@ -125,16 +125,16 @@ jobs:
           arch -arm64 bundle install --jobs 4 --retry 3 --quiet
 
       - name: Configure private npm registry
-        uses: actions/setup-node@v2
+        uses: actions/setup-node@v3
         with:
           always-auth: true
-          node-version: '14.x'
+          node-version: '16.x'
           registry-url: https://npm.pkg.github.com
           scope: ${{ inputs.npm-scope }}
 
       - name: Install node modules
         env:
-          IONIC_CLI_VERSION: '6.19.1'
+          IONIC_CLI_VERSION: '6.20.3'
         run: |
           arch -arm64 npm ci -q
           arch -arm64 npm i -g -q @ionic/cli@${IONIC_CLI_VERSION}
