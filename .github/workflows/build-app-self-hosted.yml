@@ -114,7 +114,6 @@ jobs:
           key: ${{ runner.os }}-gems-${{ hashFiles('**/Gemfile.lock') }}-v1
 
       - uses: actions/setup-java@v3
-        if: ${{ matrix.platform == 'android' }}
         with:
           distribution: 'zulu'
           java-version: ${{ inputs.java-version }}
