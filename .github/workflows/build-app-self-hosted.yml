@@ -127,13 +127,13 @@ jobs:
         uses: actions/setup-node@v4
         with:
           always-auth: true
-          node-version: '20.x'
+          node-version: '21.x'
           registry-url: https://npm.pkg.github.com
           scope: ${{ inputs.npm-scope }}
 
       - name: Install node modules
         env:
-          IONIC_CLI_VERSION: '7.1.6'
+          IONIC_CLI_VERSION: '7.2.0'
         run: |
           arch -arm64 npm ci -q
           arch -arm64 npm i -g -q @ionic/cli@${IONIC_CLI_VERSION}
