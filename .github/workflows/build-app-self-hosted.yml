@@ -120,8 +120,10 @@ jobs:
 
       - name: Install ruby gems
         run: |
+          arch -arm64 ruby -v
+          arch -arm64 which ruby
           arch -arm64 bundle config path vendor/bundle
-          arch -arm64 bundle install --jobs 4 --retry 3 --quiet
+          arch -arm64 bundle install --jobs 4 --retry 3
 
       - name: Configure private npm registry
         uses: actions/setup-node@v4
