@@ -123,8 +123,8 @@ jobs:
           if [[ -s "/opt/homebrew/opt/chruby/share/chruby/chruby.sh" ]]; then
             source /opt/homebrew/opt/chruby/share/chruby/chruby.sh
             source /opt/homebrew/opt/chruby/share/chruby/auto.sh
+            chruby $(cat .ruby-version)
           fi
-          chruby $(cat .ruby-version)
           echo "Using Ruby version $(ruby -v)"
           bundle config path vendor/bundle
           bundle install --jobs 4 --retry 3 --quiet
