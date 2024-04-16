@@ -120,16 +120,21 @@ jobs:
 
       - name: Install ruby gems
         run: |
-          arch -arm64 ruby -v
-          arch -arm64 which ruby
-          arch -arm64 echo "PATH:"
-          arch -arm64 echo $PATH
-          arch -arm64 echo "Sourcing files:"
-          arch -arm64 source ~/.bashrc
-          arch -arm64 echo "Ruby version after sourcing:"
-          arch -arm64 ruby -v
-          arch -arm64 bundle config path vendor/bundle
-          arch -arm64 bundle install --jobs 4 --retry 3
+          arch -arm64 bash -c '
+            echo "Ruby version:"
+            ruby -v
+            echo "Which Ruby:"
+            which ruby
+            echo "PATH:"
+            echo $PATH
+            echo "Sourcing files:"
+            source ~/.bashrc
+            echo "Ruby version after sourcing:"
+            ruby -v
+            echo "Bundle Config Path:"
+            bundle config path vendor/bundle
+            bundle install --jobs 4 --retry 3
+          '
 
       - name: Configure private npm registry
         uses: actions/setup-node@v4
