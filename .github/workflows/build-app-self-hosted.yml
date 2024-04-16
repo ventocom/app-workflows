@@ -121,7 +121,8 @@ jobs:
       - name: Install ruby gems
         run: |
           if [[ -s "/opt/homebrew/opt/chruby/share/chruby/chruby.sh" ]]; then
-            source "/opt/homebrew/opt/chruby/share/chruby/chruby.sh"
+            source /opt/homebrew/opt/chruby/share/chruby/chruby.sh
+            source /opt/homebrew/opt/chruby/share/chruby/auto.sh
           fi
           chruby $(cat .ruby-version)
           echo "Using Ruby version $(ruby -v)"
