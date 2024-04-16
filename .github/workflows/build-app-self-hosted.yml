@@ -124,6 +124,7 @@ jobs:
             source /opt/homebrew/opt/chruby/share/chruby/chruby.sh
             source /opt/homebrew/opt/chruby/share/chruby/auto.sh
             chruby $(cat .ruby-version)
+            echo "PATH=$(dirname $(which ruby)):$PATH" >> $GITHUB_ENV
           fi
           echo "Using Ruby version $(ruby -v)"
           bundle config path vendor/bundle
