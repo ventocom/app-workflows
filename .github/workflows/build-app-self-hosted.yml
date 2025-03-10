@@ -50,6 +50,8 @@ on:
         required: false
       PLAY_CONSOLE_ACCESS_JSON:
         required: false
+      FIREBASE_DISTRIBUTION_ACCESS_JSON:
+        required: false
 
 jobs:
   map_inputs:
@@ -152,6 +154,13 @@ jobs:
         run: |
           echo "$PLAY_CONSOLE_ACCESS_JSON" > play-console-access.json.b64
           base64 -d -i play-console-access.json.b64 > play-console-access.json
+
+      - name: Setup firebase distribution authentication
+        env:
+          FIREBASE_DISTRIBUTION_ACCESS_JSON: ${{ secrets.FIREBASE_DISTRIBUTION_ACCESS_JSON }}
+        run: |
+          echo "$FIREBASE_DISTRIBUTION_ACCESS_JSON" > firebase-distribution-access.json.b64
+          base64 -d -i firebase-distribution-access.json.b64 > firebase-distribution-access.json
 
       - name: Run fastlane
         env:
