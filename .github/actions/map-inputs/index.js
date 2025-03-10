@@ -32,7 +32,7 @@ try {
   if (distributeTest) {
     types.push({
       type: 'test',
-      lane: 'app_center_release_all'
+      lane: 'firebase_distribution_release_all'
     });
   }
 
