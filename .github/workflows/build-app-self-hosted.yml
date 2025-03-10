@@ -156,6 +156,7 @@ jobs:
       - name: Setup firebase distribution authentication
         env:
           FIREBASE_DISTRIBUTION_ACCESS_JSON: ${{ secrets.FIREBASE_DISTRIBUTION_ACCESS_JSON }}
+        if: ${{ matrix.type.type == 'test' }}
         run: |
           echo "$FIREBASE_DISTRIBUTION_ACCESS_JSON" > firebase-distribution-access.json.b64
           base64 -d -i firebase-distribution-access.json.b64 > firebase-distribution-access.json
