@@ -133,7 +133,7 @@ jobs:
           bundle install --jobs 4 --retry 3 --quiet
 
       - name: Configure private npm registry
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v6
         with:
           always-auth: true
           node-version: '22.x'
