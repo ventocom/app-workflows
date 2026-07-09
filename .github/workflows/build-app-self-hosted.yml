@@ -58,7 +58,7 @@ jobs:
     steps:
       - name: Map inputs
         id: map-inputs
-        uses: ventocom/app-workflows/.github/actions/map-inputs@appcenter-retirement
+        uses: ventocom/app-workflows/.github/actions/map-inputs
         with:
           android: ${{ fromJSON(inputs.android) }}
           ios: ${{ fromJSON(inputs.ios) }}
