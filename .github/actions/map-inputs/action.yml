@@ -23,5 +23,5 @@ outputs:
   types:
     description: 'Release type, [{ type: "test", lane: "firebase_distribution_release_all" }, { type: "release", lane: "store_release" }]'
 runs:
-  using: "node20"
+  using: "node24"
   main: "index.js"
