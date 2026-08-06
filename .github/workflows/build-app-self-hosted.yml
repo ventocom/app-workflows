@@ -133,7 +133,7 @@ jobs:
       - name: Configure private npm registry
         uses: actions/setup-node@v6
         with:
-          node-version: '22.18'
+          node-version: '24'
           registry-url: https://npm.pkg.github.com
           scope: ${{ inputs.npm-scope }}
 
@@ -141,6 +141,7 @@ jobs:
         env:
           IONIC_CLI_VERSION: '7.2.0'
         run: |
+          npm i -g npm@12
           npm ci -q
           npm i -g -q @ionic/cli@${IONIC_CLI_VERSION}
 
